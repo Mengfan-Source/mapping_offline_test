@@ -1,0 +1,11 @@
+YAML: 1.0
+bag_path: /home/xmf/xmf_bags/shangpuX30/2025-01-03-14-22-33.bag
+lio_yaml: /home/xmf/xmf_slam/mapping_offline_test/src/config/lio_mid360.yaml
+map_data: /home/xmf/xmf_slam/mapping_offline_test/data/mapdata/
+loop_closing:
+  min_id_interval: 100
+  min_distance: 30
+  skip_id: 5
+  ndt_score_th: 4.5
+optimization:
+  lidar_continuous_num: 5
