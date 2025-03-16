@@ -1,0 +1,8 @@
+YAML: 1.0
+bag_path: /home/cetc21/Downloads/slam-learning/NCLT/20130110.bag
+lio_yaml: /home/cetc21/xmf/my_slam_ws/mapping_offline_test/src/config/velodyne_nclt.yaml
+map_data: /home/cetc21/xmf/my_slam_ws/mapping_offline_test/data/mapdata/
+origin:
+  - 276726.5626579862
+  - 4685961.4821172
+  - 272.809

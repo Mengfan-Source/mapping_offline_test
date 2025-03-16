@@ -1,0 +1,11 @@
+#排除根目录下的文件
+/build/
+/data/
+/log/
+/.vscode/
+#排除其他目录下的文件
+/src/thirdpart/g2o/build/
+/src/thirdpart/g2o/lib/
+/src/thirdpart/g2o/bin/
+/src/thirdpart/g2o/.vs/
+/src/thirdpart/g2o/.vscode/
