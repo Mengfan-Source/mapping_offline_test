@@ -3,7 +3,7 @@
 
 #include "frontend/frontend.h"
 
-DEFINE_string(config_yaml, "./../src/config/mapping_mid360.yaml", "配置文件");
+DEFINE_string(config_yaml, "./../src/config/mapping_airy.yaml", "配置文件");
 
 int main(int argc, char** argv) {
     FLAGS_log_dir = "./../log";
