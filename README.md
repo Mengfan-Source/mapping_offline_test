@@ -4,6 +4,9 @@
 ## 1. 下载代码并创建工程文件夹
 ```bash
 git clone https://github.com/Mengfan-Source/mapping_offline_test.git
+#针对airy激光雷达,切换到airy分支再进行编译，或者按照更新日志20250320进行两处代码修改也可
+git switch airy
+#针对X30(揽沃数据格式),直接编译运行即可
 cd mapping_offline_test
 mkdir -p data/evo
 mkdir -p data/mapdata
@@ -81,3 +84,24 @@ evo_traj tum frontend.txt lio_keframes.txt loopclosure_keframes.txt --ref fast_l
 # 5. 开发过程文档
 飞书文档：1126-1206
 [Company20241120](https://uw7f7qxdyrb.feishu.cn/docx/PGNYd6jNIox4i7xUY9jcgUR4nIf#share-VfLWdVhAxomYjpxf3qLcxDBCn3c)
+# 6. 更新日志
+- 20250320
+    - 适配了airy激光雷达：在各个部分添加了适配airy激光雷达的代码
+        - 1.添加了airy激光雷达自带的IMU处理，在代码中量纲处理和坐标变换，所以外参设置为单位矩阵即可
+        - 2.添加了airy激光雷达数据类型的支持
+        - 3.一帧激光雷达中每个点偏移时间与其他雷达不同，接入使用IMU数据进行激光雷达运动畸变去除的SLAM算法时，需要计算偏移量（减去第一点的偏移时间即可）
+            一帧数据中每个点的偏移时间与其他雷达不同，rs_lidar的偏移时间是运行时刻递增的，而不是一个单纯的偏移量，因此在接入使用IMU进行运动畸变去除的SLAM算法时需要将每个点的偏移时间设置为当前点的时间减去第一个点的相对时间。
+        - 4.调整NDT配准参数
+        对于airy激光雷达，猜测由于重复扫描方式，NDT配准过程中的有效点数量较少，修改mapping_ofline_test/src/src/ndt_inc.cpp:288行这个参数改小后再airy雷达上能跑了,原参数（X30数据）0.01，现在0.00001（0.0001也能跑，但是效果不是很好）可以跑
+    - 建立了针对airy雷达（airy自身IMU）的yaml文件，并新建或修改如下参数
+        - 新建文件:mapping_airy.yaml lio_airy.yaml
+        - 参数bag_type可选配置：LIVOXMID360(揽沃格式雷达数据，IMU是标准格式)  AIRY(pcl2格式雷达数据,IMU量纲是1，且方向和airy外参一致)
+        - 针对airy雷达除了外参需要修改，还需要设置time_scale为1000，因为运动畸变去除代码中需要的偏移时间是ms，airy雷达数据格式的偏移时间是s
+        - 针对揽沃雷达数据格式这个调整值是写死在代码中的 /1000000，猜测揽沃雷达偏移时间单位是纳秒
+        - 针对airy激光雷达point_filter_num:设置为2为宜（airy雷达一帧中有8w个点）
+    - 建立airy分支，并将适配了airy直接能跑的代码上传到airy分支
+        - airy分支和main分支其他都相同，针对airy分支的代码也都同步改动
+        - airy分支和mian分支区别只有两点：
+            - mapping_ofline_test/src/src/ndt_inc.cpp:288在airy中为0.00001（0.0001也能跑，但是效果不是很好），在main分支为0.01（针对X30数据）
+            - mapping_offline_test/src/test/run_frontend.cpp:6 中yaml配置文件替换
+        - 如果不切换分支按照这条修改这两个部分也可直接编译运行
