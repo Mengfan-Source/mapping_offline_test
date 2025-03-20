@@ -36,7 +36,7 @@ make -j8
 #执行在build目录下执行
 bin/test_frontend
 ``` 
-# 4. 跑图流程：
+# 5. 跑图流程：
 ``` bash
 #适配数据集：
 #1.对于LIVOX和非LIVOXIMU要在/src/src/io_utils/io_utils.cpp的第68行修改IMU量纲
@@ -81,10 +81,10 @@ cd /home/cetc21/xmf/my_slam_ws/mapping_offline_test/data/evo
 evo_traj tum frontend.txt lio_keframes.txt loopclosure_keframes.txt --ref fast_lio_tum_withwaican.txt -p --plot_mode=xy
 #10.有无回环的建图效果如下所示
 ``` 
-# 5. 开发过程文档
+# 6. 开发过程文档
 飞书文档：1126-1206
 [Company20241120](https://uw7f7qxdyrb.feishu.cn/docx/PGNYd6jNIox4i7xUY9jcgUR4nIf#share-VfLWdVhAxomYjpxf3qLcxDBCn3c)
-# 6. 更新日志
+# 7. 更新日志
 - 20250320
     - 适配了airy激光雷达：在各个部分添加了适配airy激光雷达的代码
         - 1.添加了airy激光雷达自带的IMU处理，在代码中量纲处理和坐标变换，所以外参设置为单位矩阵即可
@@ -104,4 +104,4 @@ evo_traj tum frontend.txt lio_keframes.txt loopclosure_keframes.txt --ref fast_l
         - airy分支和mian分支区别只有两点：
             - mapping_ofline_test/src/src/ndt_inc.cpp:288在airy中为0.00001（0.0001也能跑，但是效果不是很好），在main分支为0.01（针对X30数据）
             - mapping_offline_test/src/test/run_frontend.cpp:6 中yaml配置文件替换
-        - 如果不切换分支按照这条修改这两个部分也可直接编译运行
+        - 如果不切换分支按照这条修改这两个部分也可直接编译运行。
