@@ -1,0 +1,12 @@
+YAML: 1.0
+bag_path: /home/xmf/xmf_bags/airy/2025-03-19-19-27-24.bag
+lio_yaml: /home/xmf/xmf_slam/mapping_offline_test/src/config/lio_airy.yaml
+map_data: /home/xmf/xmf_slam/mapping_offline_test/data/mapdata/
+bag_type: AIRY     #LIVOXMID360(揽沃格式雷达数据，IMU是标准格式)  AIRY(pcl2格式雷达数据,IMU量纲是1，且方向和airy外参一致)
+loop_closing:
+  min_id_interval: 100
+  min_distance: 30
+  skip_id: 5
+  ndt_score_th: 4.5
+optimization:
+  lidar_continuous_num: 5

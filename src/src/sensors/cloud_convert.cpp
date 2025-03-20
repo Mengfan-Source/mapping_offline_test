@@ -20,7 +20,9 @@ void CloudConvert::Process(const sensor_msgs::PointCloud2::ConstPtr &msg, FullCl
         case LidarType::VELO32:
             VelodyneHandler(msg);
             break;
-
+        case LidarType::AIRY:
+            AiryHandler(msg);
+            break;
         default:
             LOG(ERROR) << "Error LiDAR Type: " << int(lidar_type_);
             break;
@@ -135,7 +137,7 @@ void CloudConvert::VelodyneHandler(const sensor_msgs::PointCloud2::ConstPtr &msg
         added_pt.time = pl_orig.points[i].time * time_scale_;  // curvature unit: ms
 
         /// 略掉过近的点
-        if (added_pt.getVector3fMap().norm() < 4.0) {
+        if (added_pt.getVector3fMap().norm() < 4.0) {//原来是4米，现在改为1m
             continue;
         }
 
@@ -172,7 +174,33 @@ void CloudConvert::VelodyneHandler(const sensor_msgs::PointCloud2::ConstPtr &msg
         }
     }
 }
+void CloudConvert::AiryHandler(const sensor_msgs::PointCloud2::ConstPtr &msg) {
+    cloud_out_.clear();
+    cloud_full_.clear();
 
+    pcl::PointCloud<airy_ros::Point> pl_orig;
+    pcl::fromROSMsg(*msg, pl_orig);
+    int plsize = pl_orig.points.size();
+    cloud_out_.reserve(plsize);
+
+    for (int i = 0; i < plsize; i++) {
+        FullPointType added_pt;
+        added_pt.x = pl_orig.points[i].x;
+        added_pt.y = pl_orig.points[i].y;
+        added_pt.z = pl_orig.points[i].z;
+        added_pt.intensity = pl_orig.points[i].intensity;
+        added_pt.time = (pl_orig.points[i].timestamp-pl_orig.points[0].timestamp) * time_scale_;  // curvature unit: ms
+        // LOG(INFO)<<"time_scale:"<<time_scale_;
+        /// 略掉过近的点
+        if (added_pt.getVector3fMap().norm() < 1.0) {
+            continue;
+        }
+
+        if (i % point_filter_num_ == 0) {
+            cloud_out_.points.push_back(added_pt);
+        }
+    }
+}
 void CloudConvert::LoadFromYAML(const std::string &yaml_file) {
     auto yaml = YAML::LoadFile(yaml_file);
     time_scale_ = yaml["preprocess"]["time_scale"].as<double>();
@@ -189,7 +217,10 @@ void CloudConvert::LoadFromYAML(const std::string &yaml_file) {
     } else if (lidar_type == 3) {
         lidar_type_ = LidarType::OUST64;
         LOG(INFO) << "Using OUST 64 Lidar";
-    } else {
+    } else if (lidar_type == 4) {
+        lidar_type_ = LidarType::AIRY;
+        LOG(INFO) << "Using AIRY Lidar";
+    }else {
         LOG(WARNING) << "unknown lidar_type";
     }
 }

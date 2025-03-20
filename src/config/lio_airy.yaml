@@ -1,0 +1,16 @@
+preprocess:
+  lidar_type: 4                # 1 for Livox serials LiDAR, 2 for Velodyne LiDAR, 3 for ouster LiDAR, 4 for robosense airy
+  scan_line: 96
+  time_scale: 1000             # 兼容不同数据集的时间单位，mid360的时间单位为1e-6（但是写死在程序中的实际上没用到），airy的时间单位(雷达数据以秒为单位)为1e3
+
+mapping:
+  extrinsic_T: [ 0, 0, 0 ] #  对于airy雷达，若使用雷达自带的IMU在程序中处理好了
+  extrinsic_R: [ 1, 0, 0,
+                 0, 1, 0,
+                 0, 0, 1 ]
+  # extrinsic_T: [ 0.0, 0.0, 0.0 ]
+  # extrinsic_R: [0.000586694, -0.999996, 0.0110272,
+  #               -0.999939, -0.000617337, -0.00277354,
+  #               0.00278018, -0.0110255, -0.999935]
+
+point_filter_num: 2

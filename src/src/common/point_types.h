@@ -119,5 +119,24 @@ POINT_CLOUD_REGISTER_POINT_STRUCT(ouster_ros::Point,
                                       (std::uint16_t, ambient, ambient)
                                       (std::uint32_t, range, range)
 )
+namespace airy_ros {
+  struct EIGEN_ALIGN16 Point {
+      PCL_ADD_POINT4D;
+      float intensity;
+      std::uint16_t ring = 0;
+      double timestamp = 0;
+      std::uint8_t feature;
+      EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+  };
+}  // namespace airy_ros
+POINT_CLOUD_REGISTER_POINT_STRUCT(airy_ros::Point,
+    (float, x, x)
+    (float, y, y)
+    (float, z, z)
+    (float, intensity, intensity)
+    (std::uint16_t, ring, ring)
+    (double, timestamp, timestamp)
+    (std::uint8_t, feature, feature)
+)
 // clang-format on
 #endif  // XMF_POINT_TYPES_H

@@ -6,6 +6,7 @@ enum class DatasetType {
     UNKNOWN = -1,
     NCLT = 0,   // NCLT: http://robots.engin.umich.edu/nclt/
     LIVOXMID360 = 1,  // mid360激光雷达
+    AIRY = 2,
 };
 
 inline DatasetType Str2DatasetType(const std::string& name) {
@@ -15,6 +16,8 @@ inline DatasetType Str2DatasetType(const std::string& name) {
     if (name == "LIVOXMID360") {
         return DatasetType::LIVOXMID360;
     }
+    if (name == "AIRY")
+        return DatasetType::AIRY;
     return DatasetType::UNKNOWN;
 }
 /// 各种数据集里用的topic名称
@@ -24,6 +27,9 @@ const std::string nclt_lidar_topic = "points_raw";
 
 const std::string mid360_lidar_topic = "/livox/lidar";
 const std::string mid360_imu_topic = "/imu/data";
+
+const std::string airy_lidar_topic = "/rslidar_points";
+const std::string airy_imu_topic = "/rslidar_imu_data";
 
 }  
 

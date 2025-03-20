@@ -24,6 +24,7 @@ class CloudConvert {
         MID360 = 1,  // 大疆的固态雷达
         VELO32,    // Velodyne 32线
         OUST64,    // ouster 64线
+        AIRY
     };
 
     CloudConvert() = default;
@@ -50,6 +51,7 @@ class CloudConvert {
     void Mid360Handler(const livox_ros_driver2::CustomMsg::ConstPtr &msg);
     void Oust64Handler(const sensor_msgs::PointCloud2::ConstPtr &msg);
     void VelodyneHandler(const sensor_msgs::PointCloud2::ConstPtr &msg);
+    void AiryHandler(const sensor_msgs::PointCloud2::ConstPtr &msg);
 
     FullPointCloudType cloud_full_, cloud_out_;  // 输出点云
     LidarType lidar_type_ = LidarType::MID360;     // 雷达类型

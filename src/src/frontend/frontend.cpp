@@ -19,6 +19,7 @@ bool Frontend::Init() {
         bag_path_ = yaml["bag_path"].as<std::string>();
         lio_yaml_ = yaml["lio_yaml"].as<std::string>();
         map_path_ = yaml["map_data"].as<std::string>();
+        bag_type_ = yaml["bag_type"].as<std::string>();
     } catch (...) {
         LOG(ERROR) << "failed to parse yaml";
         return false;
@@ -35,23 +36,29 @@ bool Frontend::Init() {
 }
 
 void Frontend::Run() {
-    xmf::RosbagIO rosbag_io(bag_path_, DatasetType::LIVOXMID360);
+    std::shared_ptr<xmf::RosbagIO> rosbag_io = nullptr;
+    if(bag_type_ == "AIRY")
+        // xmf::RosbagIO rosbag_io(bag_path_, DatasetType::AIRY);
+        rosbag_io = std::make_shared<xmf::RosbagIO>(bag_path_, DatasetType::AIRY);
+    else if(bag_type_ == "LIVOXMID360")
+        // xmf::RosbagIO rosbag_io(bag_path_, DatasetType::LIVOXMID360);
+        rosbag_io = std::make_shared<xmf::RosbagIO>(bag_path_, DatasetType::LIVOXMID360);
 
-    if(rosbag_io.dataset_type_ == DatasetType::NCLT){
+    if(rosbag_io->dataset_type_ == DatasetType::NCLT){
         // 先提取RTK pose，注意NCLT只有平移部分
         rosbag_io
-            .AddAutoRTKHandle([this](GNSSPtr gnss) {
+            ->AddAutoRTKHandle([this](GNSSPtr gnss) {
                 gnss_.emplace(gnss->unix_time_, gnss);
                 return true;
             })
             .Go();
-        rosbag_io.CleanProcessFunc();  // 不再需要处理RTK
+        rosbag_io->CleanProcessFunc();  // 不再需要处理RTK
         RemoveMapOrigin();
     }
 
     // 再运行LIO
     rosbag_io
-        .AddAutoPointCloudHandle([&](sensor_msgs::PointCloud2::Ptr cloud) -> bool {
+        ->AddAutoPointCloudHandle([&](sensor_msgs::PointCloud2::Ptr cloud) -> bool {
             lio_->PCLCallBack(cloud);
             ExtractKeyFrame(lio_->GetCurrentState());
             return true;

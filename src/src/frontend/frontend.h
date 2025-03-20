@@ -58,7 +58,7 @@ class Frontend {
     std::string map_path_;    //保存地图yaml的文件夹路径
     double kf_dis_th_ = 1.0;       // 关键帧距离阈值
     double kf_ang_th_deg_ = 10.0;  // 关键帧角度阈值（度）
-
+    std::string bag_type_;
     std::ofstream pose_tum;
 };
 
