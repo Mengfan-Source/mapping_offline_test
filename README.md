@@ -104,4 +104,6 @@ evo_traj tum frontend.txt lio_keframes.txt loopclosure_keframes.txt --ref fast_l
         - airy分支和mian分支区别只有两点：
             - mapping_ofline_test/src/src/ndt_inc.cpp:288在airy中为0.00001（0.0001也能跑，但是效果不是很好），在main分支为0.01（针对X30数据）
             - mapping_offline_test/src/test/run_frontend.cpp:6 中yaml配置文件替换
+                mapping_offline_test/src/test/run_frontend.cpp 中yaml配置文件替换
+                mapping_offline_test/src/test/run_find_loopclosure.cpp中yaml配置文件替换
         - 如果不切换分支按照这条修改这两个部分也可直接编译运行。
