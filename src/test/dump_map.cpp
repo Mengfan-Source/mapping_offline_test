@@ -17,6 +17,7 @@ DEFINE_string(dump_to, "./../data/mapdata/", "导出的目标路径");
  */
 
 int main(int argc, char** argv) {
+    FLAGS_log_dir = "./../log";
     google::ParseCommandLineFlags(&argc, &argv, true);
     google::InitGoogleLogging(argv[0]);
     FLAGS_stderrthreshold = google::INFO;

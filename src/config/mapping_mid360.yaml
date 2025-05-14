@@ -1,5 +1,5 @@
 YAML: 1.0
-bag_path: /home/xmf/xmf_bags/shangpuX30/2025-01-03-14-22-33.bag
+bag_path: /home/xmf/xmf_bags/fromX30/0508/outdoor/yanshishiwai.bag
 lio_yaml: /home/xmf/xmf_slam/mapping_offline_test/src/config/lio_mid360.yaml
 map_data: /home/xmf/xmf_slam/mapping_offline_test/data/mapdata/
 bag_type: LIVOXMID360   #LIVOXMID360(揽沃格式雷达数据，IMU是标准格式)  AIRY(pcl2格式雷达数据,IMU量纲是1，且方向和airy外参一致)

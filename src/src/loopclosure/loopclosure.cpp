@@ -80,12 +80,17 @@ void LoopClosure::DetectLoopCandidates() {
         }
     }
     LOG(INFO) << "detected candidates: " << loop_candiates_.size();
+    all_lc_num = loop_candiates_.size();
 }
 
 void LoopClosure::ComputeLoopCandidates() {
     // 执行计算
     std::for_each(std::execution::par_unseq, loop_candiates_.begin(), loop_candiates_.end(),
-                  [this](LoopCandidate& c) { ComputeForCandidate(c); });
+                  [this](LoopCandidate& c) { 
+                    ComputeForCandidate(c); 
+                    computed_num+=1;
+                    LOG(INFO) << "processing candidate "<<computed_num<<"in "<<all_lc_num;
+                  });
     // 保存成功的候选
     std::vector<LoopCandidate> succ_candidates;
     for (const auto& lc : loop_candiates_) {
