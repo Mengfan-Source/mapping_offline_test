@@ -107,3 +107,8 @@ evo_traj tum frontend.txt lio_keframes.txt loopclosure_keframes.txt --ref fast_l
                 mapping_offline_test/src/test/run_frontend.cpp 中yaml配置文件替换
                 mapping_offline_test/src/test/run_find_loopclosure.cpp中yaml配置文件替换
         - 如果不切换分支按照这条修改这两个部分也可直接编译运行。
+- 20250514
+    - 添加日志目录位置
+    - 在find_lc中添加进度表示内容
+    - 添加dump_map_noground.cpp对单个关键中的base下的点进行滤除
+    

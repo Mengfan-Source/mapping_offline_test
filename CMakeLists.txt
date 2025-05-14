@@ -154,7 +154,19 @@ target_link_libraries(
     tbb
     ${g2o_libs}
 )
-
+add_executable(
+    test_dump_map_noground
+    src/test/dump_map_noground.cpp
+)
+target_link_libraries(
+    test_dump_map_noground
+    LIO_STATICLIB_ALL
+    ${EIGEN3_LIBRARIES}
+    ${PCL_LIBRARIES}
+    ${catkin_LIBRARIES}
+    glog
+    gflags 
+)
 #生成静态库之前的版本
 # add_executable(test_run_frontend 
 #         src/test/run_frontend.cpp
