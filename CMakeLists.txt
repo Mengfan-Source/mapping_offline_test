@@ -167,6 +167,20 @@ target_link_libraries(
     glog
     gflags 
 )
+add_executable(
+    test_dump_map_gpf
+    src/test/dump_map_gpf.cpp
+    src/src/ground_filter_gpf/ground_filter.cpp
+)
+target_link_libraries(
+    test_dump_map_gpf
+    LIO_STATICLIB_ALL
+    ${EIGEN3_LIBRARIES}
+    ${PCL_LIBRARIES}
+    ${catkin_LIBRARIES}
+    glog
+    gflags 
+)
 #生成静态库之前的版本
 # add_executable(test_run_frontend 
 #         src/test/run_frontend.cpp
