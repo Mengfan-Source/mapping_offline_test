@@ -1,5 +1,5 @@
 YAML: 1.0
-bag_path: /home/xmf/xmf_bags/airy/2025-03-19-19-27-24.bag
+bag_path: /home/xmf/xmf_bags/airy/new_use/2025-06-10-16-08-09.bag
 lio_yaml: /home/xmf/xmf_slam/mapping_offline_test/src/config/lio_airy.yaml
 map_data: /home/xmf/xmf_slam/mapping_offline_test/data/mapdata/
 bag_type: AIRY     #LIVOXMID360(揽沃格式雷达数据，IMU是标准格式)  AIRY(pcl2格式雷达数据,IMU量纲是1，且方向和airy外参一致)
