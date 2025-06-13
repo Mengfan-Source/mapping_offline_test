@@ -111,4 +111,7 @@ evo_traj tum frontend.txt lio_keframes.txt loopclosure_keframes.txt --ref fast_l
     - 添加日志目录位置
     - 在find_lc中添加进度表示内容
     - 添加dump_map_noground.cpp对单个关键中的base下的点进行滤除
+- 20250613
+    这是第一个稳定运行版本保存在分支:stable_version_v1.0中
+
     
